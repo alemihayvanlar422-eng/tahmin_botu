@@ -6,7 +6,7 @@ from telegram.ext import Application, CommandHandler, ContextTypes
 from http.server import BaseHTTPRequestHandler, HTTPServer
 import threading
 
-TOKEN = "8972298154:AAHzV6ISlMYxLYY6Xz4DoJt9b0Gj2XKAhA4"
+TOKEN = "8972298154:AAFH7Rf6cauKkXGNN0BAN1L-855Wn8Ntww0"
 
 # İnternet sunucusunun robotu açık tutması için gereken sahte web sayfası
 class HealthCheckHandler(BaseHTTPRequestHandler):
