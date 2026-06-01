@@ -6,9 +6,9 @@ from telegram.ext import Application, CommandHandler, ContextTypes
 from http.server import BaseHTTPRequestHandler, HTTPServer
 import threading
 
+# ⚠️ BURADAKİ TIRNAKLARIN İÇİNE BOTFATHER'DAN ALDIĞIN YENİ GİZLİ ŞİFREYİ YAZ:
 TOKEN = "8972298154:AAFH7Rf6cauKkXGNN0BAN1L-855Wn8Ntww0"
 
-# İnternet sunucusunun robotu açık tutması için gereken sahte web sayfası
 class HealthCheckHandler(BaseHTTPRequestHandler):
     def do_GET(self):
         self.send_response(200)
@@ -56,4 +56,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-    
