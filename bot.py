@@ -6,7 +6,6 @@ from telegram.ext import Application, CommandHandler, ContextTypes
 from http.server import BaseHTTPRequestHandler, HTTPServer
 import threading
 
-# ⚠️ BURADAKİ TIRNAKLARIN İÇİNE BOTFATHER'DAN ALDIĞIN YENİ GİZLİ ŞİFREYİ YAZ:
 TOKEN = "8972298154:AAFH7Rf6cauKkXGNN0BAN1L-855Wn8Ntww0"
 
 class HealthCheckHandler(BaseHTTPRequestHandler):
