@@ -6,6 +6,7 @@ from telegram.ext import Application, CommandHandler, ContextTypes
 from http.server import BaseHTTPRequestHandler, HTTPServer
 import threading
 
+
 TOKEN = "8972298154:AAFH7Rf6cauKkXGNN0BAN1L-855Wn8Ntww0"
 
 class HealthCheckHandler(BaseHTTPRequestHandler):
@@ -49,9 +50,15 @@ def main():
     threading.Thread(target=start_health_server, daemon=True).start()
     
     print("🚀 Robot 7/24 dinleme modunda başlatılıyor...")
+    
+    # HATA VEREN KISMI BU İKİ SATIRLA DÜZELTİYORUZ (YENİ EVENT LOOP OLUŞTURMA)
+    loop = asyncio.new_event_loop()
+    asyncio.set_event_loop(loop)
+    
     app = Application.builder().token(TOKEN).build()
     app.add_handler(CommandHandler("tahmin", tahmin_komutu))
     app.run_polling()
 
 if __name__ == '__main__':
     main()
+    
