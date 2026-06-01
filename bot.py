@@ -1,10 +1,25 @@
 import asyncio
+import os
 import pandas as pd
-import requests
 from telegram import Update
 from telegram.ext import Application, CommandHandler, ContextTypes
+from http.server import BaseHTTPRequestHandler, HTTPServer
+import threading
 
 TOKEN = "8972298154:AAHzV6ISlMYxLYY6Xz4DoJt9b0Gj2XKAhA4"
+
+# İnternet sunucusunun robotu açık tutması için gereken sahte web sayfası
+class HealthCheckHandler(BaseHTTPRequestHandler):
+    def do_GET(self):
+        self.send_response(200)
+        self.send_header("Content-type", "text/plain")
+        self.end_headers()
+        self.wfile.write(b"Robot aktif ve calisiyor!")
+
+def start_health_server():
+    port = int(os.environ.get("PORT", 8080))
+    server = HTTPServer(("0.0.0.0", port), HealthCheckHandler)
+    server.serve_forever()
 
 def maclari_ve_tahminleri_getir():
     try:
@@ -25,23 +40,20 @@ def maclari_ve_tahminleri_getir():
         yedek_mesaj += "⚽ Real Madrid vs Barcelona\n🎯 Tahmin: 2.5 ÜST\n📊 Güven Oranı: %88\n-------------------------\n"
         return yedek_mesaj
 
-# Kullanıcı Telegram'dan /tahmin yazdığında çalışacak fonksiyon
 async def tahmin_komutu(update: Update, context: ContextTypes.DEFAULT_TYPE):
     print("📩 Kullanıcı tahmin istedi, hesaplanıyor...")
     mesaj = maclari_ve_tahminleri_getir()
     await update.message.reply_text(mesaj, parse_mode="Markdown")
 
 def main():
+    print("🚀 Sahte web sunucusu baslatiliyor...")
+    threading.Thread(target=start_health_server, daemon=True).start()
+    
     print("🚀 Robot 7/24 dinleme modunda başlatılıyor...")
-    # Telegram bot uygulamasını kuruyoruz
     app = Application.builder().token(TOKEN).build()
-    
-    # Koda /tahmin komutunu öğretiyoruz
     app.add_handler(CommandHandler("tahmin", tahmin_komutu))
-    
-    # Botu sonsuz döngüde açık tutuyoruz (Polling yöntemi)
     app.run_polling()
 
 if __name__ == '__main__':
     main()
-  
+    
